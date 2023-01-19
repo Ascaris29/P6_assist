@@ -18,6 +18,9 @@ const app = express()
 //logger les requetes et les reponses 
 app.use(morgan("dev"));
 
+//debeugeur base de données
+//mongoose.set('debug', true)
+
 // middleware poue les erreurs CORS .. s'applique sur toutes les routes
 app.use((req, res, next)=>{
     // la fonction setHeader définit une valeur d'en tête
@@ -34,6 +37,8 @@ app.use(express.json());
 //route d'authentification signup 
 //N'oublie pas la barre du debut car "api/auth" ne fonctionnera pas 
 app.use("/api/auth", userRoutes)
+
+
 
 
 //--------------------------------------------------------------- Exportation -------------------------------------------//
