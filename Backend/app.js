@@ -8,9 +8,10 @@ const morgan = require('morgan')
 const mongoose = require('./db/database')
 //importation modele de donnée user 
 const userModel = require('./models/userModel')
-//importation des routes
+//importation des routes users
 const userRoutes = require('./routes/userRoutes')
-//const bodyparser = require('body-parser')
+//importation des routes sauces
+const saucesRoutes = require('./routes/saucesRoutes')
 //------------------------------------------------------- Application ----------------------------------------------//
 //crée une application express 
 const app = express()
@@ -34,11 +35,12 @@ app.use((req, res, next)=>{
 //importation de body parser qui analyse le corps des requetes et des reponses
 app.use(express.json());
 
-//route d'authentification signup 
+//middleware d'authentification
 //N'oublie pas la barre du debut car "api/auth" ne fonctionnera pas 
 app.use("/api/auth", userRoutes)
 
-
+// middleware sauces
+app.use("/api", saucesRoutes)
 
 
 //--------------------------------------------------------------- Exportation -------------------------------------------//
