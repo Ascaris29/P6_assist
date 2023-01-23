@@ -1,13 +1,16 @@
 //importation express
 const express = require('express');
 //importation logique routes
-const routeLogique = require('../controllers/saucesLogiqueRoutes')
+const sauceControllers = require('../controllers/saucesControllers')
 
 //création routeur
 const router = express.Router();
 
 //création d'une route pour créer des sauces
-router.post("/sauces", routeLogique.createSauce);
+router.post("/sauces", sauceControllers.createSauce);
+
+//récupération des données
+router.get('/sauces', sauceControllers.getAllSauces);
 
 
 

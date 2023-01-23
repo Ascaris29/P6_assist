@@ -23,13 +23,13 @@ app.use(morgan("dev"));
 //mongoose.set('debug', true)
 
 // middleware poue les erreurs CORS .. s'applique sur toutes les routes
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     // la fonction setHeader définit une valeur d'en tête
-    res.setHeader('Access-Control-Allow-Origin', "*");
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-with, Content');
-    next()
-})
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+  });
 
 
 //importation de body parser qui analyse le corps des requetes et des reponses

@@ -40,7 +40,6 @@ exports.signup = (req, res) => {
     })
     .catch((err) => res.status(500).json(err))
 }
-
 //middleware login 
 //verification des données utilisateurs
 exports.login = (req, res) => {
