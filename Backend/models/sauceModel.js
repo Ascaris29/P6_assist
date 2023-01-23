@@ -13,7 +13,8 @@ const sauceModel = mongoose.Schema({
     dislikes : { type: Number, required : true},
     usersLiked : { type : Array, required : true},
     usersDisliked : { type : Array, required : true}
-})
+    
+}, {strict: false})
 
 //exporation du modèle de données
 // le nom entre guillemets permets d'identifier les données dans mongoDB

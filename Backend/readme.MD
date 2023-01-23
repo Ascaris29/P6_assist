@@ -17,3 +17,6 @@ http://localhost:3000/api/sauces
 
 ## route GET pour récupérer une sauce
 http://localhost:3000/api/sauces/:id
+
+## route PUT pour modifier une sauce 
+http://localhost:3000/api/sauces/:id
