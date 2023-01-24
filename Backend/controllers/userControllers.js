@@ -15,7 +15,6 @@ const jwt = require('jsonwebtoken');
 
 
 
-
 //middleware signup
 // création d'une donnée user à partir du modele dans le fichier userModel
 // récupération des données user grace à req.body qui recupere le corps de la requete que l'utilisateur a tapé
