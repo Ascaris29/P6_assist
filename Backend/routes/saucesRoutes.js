@@ -6,11 +6,14 @@ const sauceControllers = require('../controllers/saucesControllers');
 //importation authentification
 const authentification = require('../middlewares/authentification');
 
+//importation multer
+const multer = require("../middlewares/multer");
+
 //création routeur
 const router = express.Router();
 
 //création d'une route pour créer des sauces
-router.post("/sauces", authentification, sauceControllers.createSauce);
+router.post("/sauces", authentification, multer, sauceControllers.createSauce);
 
 //récupération de toutes les sauces
 router.get('/sauces', authentification, sauceControllers.getAllSauces);

@@ -3,12 +3,17 @@ const sauceModel = require('../models/sauceModel');
 
 //fonction pour créer une sauce
 exports.createSauce = (req, res, next) => {
+    console.log(req.auth.userId)
+    const sauceParse = JSON.parse(req.body.sauce);
     //on supprime l'id crée par mongodb automatiquement car on a déja l'id de l'user dans le req.body
-    delete req.body._id;
+    delete sauceParse._id;
+    delete sauceParse._userId;
     const sauce = new sauceModel({
         //l'operateur spread (...) copie toutes les données envoyées par le front
-        ...req.body
-    })
+        ...sauceParse,
+        userId : req.auth.userId,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });
     //enregistrement des données dans la base de données
     sauce.save()
     .then(() => res.status(201).json({message : "Votre sauce a bien été crée"}))

@@ -12,6 +12,8 @@ const userModel = require('./models/userModel');
 const userRoutes = require('./routes/userRoutes');
 //importation des routes sauces
 const saucesRoutes = require('./routes/saucesRoutes');
+//importation path
+const path = require('path');
 //------------------------------------------------------- Application ----------------------------------------------//
 //crée une application express 
 const app = express();
@@ -41,6 +43,9 @@ app.use("/api/auth", userRoutes);
 
 // middleware sauces
 app.use("/api", saucesRoutes);
+
+//routage image
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 //--------------------------------------------------------------- Exportation -------------------------------------------//

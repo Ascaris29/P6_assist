@@ -14,18 +14,12 @@ const authentificationByToken = (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.JWT_KEY_TOKEN);
         //recuperation du user Id qu'il y'a à l'interieur du token décodé
         const userIdDecodedToken = decodedToken.userId;
-        // // rajout de l'userId à l'objet request
-        // req.auth = {
-        //     userId : userIdDecodedToken
-        // };
-        console.log(req)
-        //comparer l'userId en clair et l'userId du token décodé
-        if(req.body.userId === userIdDecodedToken){
-            next();
-        }else{
-            throw "user id non valide"
-        }
-        
+        // rajout de l'userId à l'objet request
+        req.auth = {
+            userId : userIdDecodedToken
+        };  
+        next()
+        //console.log(req.auth.userId)  
     }catch(err){
         res.status(401).json({
             message : "erreur d'authentification",

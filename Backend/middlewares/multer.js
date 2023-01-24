@@ -12,6 +12,7 @@ const MIME_TYPE = {
 }
 
 //gérer la destination (répertoire) du fichier et générer un nom de fichier unique
+//enregistre sur le disque
 const storage = multer.diskStorage({
     //la destination de stockage de fichiers
     destination : (req, file, callback) => {
@@ -22,11 +23,12 @@ const storage = multer.diskStorage({
         const name = file.originalname.split(" ").join("_");
         const extension = MIME_TYPE[file.mimetype];
         //cela va nous sortir les milisecondes ce qui fait que ce chiffre est unique
-        callback(null, name + "_" + Date.now() + extension)
+        callback(null, name + "_" + Date.now() + "." + extension);
     }
 })
 
 
 
 //exportation du multer
+//nous generons uniquement les téléchargerments de fichiers images
 module.exports = multer({storage}).single("image");
