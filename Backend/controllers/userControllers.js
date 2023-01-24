@@ -69,7 +69,7 @@ exports.login = (req, res) => {
                         //encodage du userId pour la création de nouvel objet (objet et userid seront liés)
                         userId : user._id,
                         //création d'un token
-                        token : jwt.sign(
+                            token : jwt.sign(
                             {userId : user._id},
                             process.env.JWT_KEY_TOKEN,
                             { expiresIn: "12h"}

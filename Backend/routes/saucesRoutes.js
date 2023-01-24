@@ -10,19 +10,19 @@ const authentification = require('../middlewares/authentification');
 const router = express.Router();
 
 //création d'une route pour créer des sauces
-router.post("/sauces", sauceControllers.createSauce);
+router.post("/sauces", authentification, sauceControllers.createSauce);
 
 //récupération de toutes les sauces
-router.get('/sauces', sauceControllers.getAllSauces);
+router.get('/sauces', authentification, sauceControllers.getAllSauces);
 
 // récupération d'une sauce par son id
-router.get('/sauces/:id', sauceControllers.getOneSauce);
+router.get('/sauces/:id', authentification, sauceControllers.getOneSauce);
 
 //modification d'une sauce
-router.put('/sauces/:id', sauceControllers.modifyOneSauce);
+router.put('/sauces/:id', authentification, sauceControllers.modifyOneSauce);
 
 //suppression d'une sauce
-router.delete('/sauces/:id', sauceControllers.deleteOneSauce);
+router.delete('/sauces/:id', authentification, sauceControllers.deleteOneSauce);
 
 
 //exporter le routeur
