@@ -2,10 +2,10 @@
 const mongoose = require('mongoose');
 
 //importation variable d'environnement
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
 
 //connexion à la base de données mongodb
-mongoose.set('strictQuery', false)
+mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DB_URL, /*ne pas oublier de retirer les balises fermantes*/
 {
     useNewUrlParser :true,
@@ -16,4 +16,4 @@ mongoose.connect(process.env.DB_URL, /*ne pas oublier de retirer les balises fer
 
 
 //exportation du fichier database.js
-module.exports = mongoose
+module.exports = mongoose;

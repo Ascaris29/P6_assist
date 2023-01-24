@@ -39,7 +39,7 @@ exports.signup = (req, res) => {
 
     })
     .catch((err) => res.status(500).json(err))
-}
+};
 //middleware login 
 //verification des données utilisateurs
 exports.login = (req, res) => {
@@ -68,20 +68,17 @@ exports.login = (req, res) => {
                     res.status(200).json({
                         //encodage du userId pour la création de nouvel objet (objet et userid seront liés)
                         userId : user._id,
+                        //création d'un token
                         token : jwt.sign(
                             {userId : user._id},
                             process.env.JWT_KEY_TOKEN,
                             { expiresIn: "12h"}
                         )
                     })
-                    //création d'un token
-
                 }
             })
             .catch((err) => res.status(500).json({err}))
         }
     })
-    .catch((err) => res.status(500).json({err}))
-
-    
-}
+    .catch((err) => res.status(500).json({err}))  
+};

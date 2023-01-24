@@ -1,20 +1,20 @@
 //app.js gère toutes les requetes envoyées par le serveur 
 //--------------------------------------------------------- Importation modules ------------------------------------------------//
 //importation express
-const express = require('express')
+const express = require('express');
 //importation de morgan (loger(journal d'erreurs) http)
-const morgan = require('morgan')
+const morgan = require('morgan');
 //importation connexion de la base de donnée
-const mongoose = require('./db/database')
+const mongoose = require('./db/database');
 //importation modele de donnée user 
-const userModel = require('./models/userModel')
+const userModel = require('./models/userModel');
 //importation des routes users
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/userRoutes');
 //importation des routes sauces
-const saucesRoutes = require('./routes/saucesRoutes')
+const saucesRoutes = require('./routes/saucesRoutes');
 //------------------------------------------------------- Application ----------------------------------------------//
 //crée une application express 
-const app = express()
+const app = express();
 //-------------------------------------------------- Middlewares ----------------------------------------------------//
 //logger les requetes et les reponses 
 app.use(morgan("dev"));
@@ -37,14 +37,14 @@ app.use(express.json());
 
 //middleware d'authentification
 //N'oublie pas la barre du debut car "api/auth" ne fonctionnera pas 
-app.use("/api/auth", userRoutes)
+app.use("/api/auth", userRoutes);
 
 // middleware sauces
-app.use("/api", saucesRoutes)
+app.use("/api", saucesRoutes);
 
 
 //--------------------------------------------------------------- Exportation -------------------------------------------//
 //exportation de app.js pour l'utiliser dans les autres fichiers
-module.exports = app
+module.exports = app;
 
 

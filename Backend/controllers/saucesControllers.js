@@ -13,7 +13,7 @@ exports.createSauce = (req, res, next) => {
     sauce.save()
     .then(() => res.status(201).json({message : "Votre sauce a bien été crée"}))
     .catch((err) => res.status(400).json({err}));
-}
+};
 //fonction pour récuperer toutes les sauces
 exports.getAllSauces = (req, res, next) => {
     sauceModel.find()
@@ -21,7 +21,7 @@ exports.getAllSauces = (req, res, next) => {
         res.status(200).json({allSauces})
     })
     .catch((err) => res.status(400).json({err}))
-}
+};
 
 //fonction pour récupérer une sauce avec son _id
 exports.getOneSauce = (req, res, next) => {
@@ -31,7 +31,7 @@ exports.getOneSauce = (req, res, next) => {
     //affiche la sauce correspondante à son _id
     .then((sauce) => res.status(200).json({sauce}))
     .catch((err) => res.status(400).json({err}))
-}
+};
 
 //fonction pour modifier une sauce avec son _id
 exports.modifyOneSauce = (req, res, next) => {
@@ -40,11 +40,11 @@ exports.modifyOneSauce = (req, res, next) => {
     sauceModel.updateOne({_id : req.params.id}, {...req.body, _id: req.params.id})
     .then(() => res.status(200).json({message : "Cette sauce a bien été modifiée !"}))
     .catch((err) => res.status(400).json({err}))
-}
+};
 
 //fonction pour supprimer une sauce avec son _id
 exports.deleteOneSauce = (req, res, next) => {
     sauceModel.deleteOne({_id : req.params.id})
     .then(() => res.status(200).json({message : "Cette sauce a bien été supprimée !"}))
     .catch((err) => res.status(400).json({err}))
-}
+};

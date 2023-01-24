@@ -1,7 +1,10 @@
 //importation express
 const express = require('express');
 //importation logique routes
-const sauceControllers = require('../controllers/saucesControllers')
+const sauceControllers = require('../controllers/saucesControllers');
+
+//importation authentification
+const authentification = require('../middlewares/authentification');
 
 //création routeur
 const router = express.Router();

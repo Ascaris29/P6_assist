@@ -1,5 +1,5 @@
 // importation du plugin password validator qui verifie si le mot de passe est correcte
-const passwordValidator = require('password-validator')
+const passwordValidator = require('password-validator');
 
 //création d'un schema de mot de passe ( aller voir la doc )
 const schemaPassword = new passwordValidator();
@@ -24,8 +24,8 @@ const verificationQualityPassword = (req, res, next) => {
         res.status(400).json({message : `le mot de passe n'est pas correct ${schemaPassword.validate('req.body.password', {list : true})}`});
         next()
     }
-}
+};
 
 //exporation de la fonction de verification de la qualté du password 
-module.exports = verificationQualityPassword
+module.exports = verificationQualityPassword;
 
