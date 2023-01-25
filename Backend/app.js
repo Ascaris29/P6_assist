@@ -18,11 +18,11 @@ const path = require('path');
 //crée une application express 
 const app = express();
 //-------------------------------------------------- Middlewares ----------------------------------------------------//
-//logger les requetes et les reponses 
-app.use(morgan("dev"));
 
 //debeugeur base de données
 //mongoose.set('debug', true)
+
+
 
 // middleware poue les erreurs CORS .. s'applique sur toutes les routes
 app.use((req, res, next) => {
@@ -34,16 +34,16 @@ app.use((req, res, next) => {
   });
 
 
+//logger les requetes et les reponses 
+app.use(morgan("dev"));
 //importation de body parser qui analyse le corps des requetes et des reponses
 app.use(express.json());
 
 //middleware d'authentification
 //N'oublie pas la barre du debut car "api/auth" ne fonctionnera pas 
 app.use("/api/auth", userRoutes);
-
 // middleware sauces
-app.use("/api", saucesRoutes);
-
+app.use("/api/sauces", saucesRoutes);
 //routage image
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
