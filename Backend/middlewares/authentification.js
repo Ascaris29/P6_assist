@@ -15,6 +15,7 @@ const authentificationByToken = (req, res, next) => {
         //recuperation du user Id qu'il y'a à l'interieur du token décodé
         const userIdDecodedToken = decodedToken.userId;
         // rajout de l'userId à l'objet request
+        
         req.auth = {
             userId : userIdDecodedToken
         };  
@@ -27,6 +28,7 @@ const authentificationByToken = (req, res, next) => {
         });
     }
 };
+
 
 module.exports = authentificationByToken;
 

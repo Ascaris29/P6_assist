@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 
 //logger les requetes et les reponses 
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 //importation de body parser qui analyse le corps des requetes et des reponses
 app.use(express.json());
 

@@ -23,10 +23,10 @@ router.get('/', authentification, sauceControllers.getAllSauces);
 router.get('/:id', authentification, sauceControllers.getOneSauce);
 
 //modification d'une sauce
-router.put('/:id', authentification, sauceControllers.modifyOneSauce);
+router.put('/:id', authentification, multer, sauceControllers.modifyOneSauce);
 
 //suppression d'une sauce
-router.delete('/:id', authentification, sauceControllers.deleteOneSauce);
+router.delete('/:id', authentification, multer, sauceControllers.deleteOneSauce);
 
 //ajout de like et de dislike
 router.post("/:id/like", authentification, sauceControllers.likeSauce)

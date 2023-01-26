@@ -1,6 +1,9 @@
 //importation du modèle pour la base de donnée
 const sauceModel = require('../models/sauceModel');
 
+//importation fs
+const fs = require('fs');
+
 //fonction pour créer une sauce
 exports.createSauce = (req, res, next) => {
     const sauceParse = JSON.parse(req.body.sauce);
@@ -46,21 +49,60 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 //fonction pour modifier une sauce avec son _id
+// exports.modifyOneSauce = (req, res, next) => {
+//     //fonction updateOne prend en 1er argument l'_id de la sauce qui sera le filter
+//     // prend en 2eme argument tout ce qu'il y'a de nouveau dans le body et encore l'_id de la sauce par securité
+//     console.log(req.body)
+//     sauceModel
+//     .updateOne({_id : req.params.id}, {...req.body, _id: req.params.id})
+//     .then(() => res.status(200).json({message : "Cette sauce a bien été modifiée !"}))
+//     .catch((err) => res.status(400).json({err}))
+// };
+
 exports.modifyOneSauce = (req, res, next) => {
-    //fonction updateOne prend en 1er argument l'_id de la sauce qui sera le filter
-    // prend en 2eme argument tout ce qu'il y'a de nouveau dans le body et encore l'_id de la sauce par securité
-    sauceModel
-    .updateOne({_id : req.params.id}, {...req.body, _id: req.params.id})
-    .then(() => res.status(200).json({message : "Cette sauce a bien été modifiée !"}))
-    .catch((err) => res.status(400).json({err}))
-};
+    const sauceWithImage = req.file ? {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { ...req.body };
+  
+    delete sauceWithImage._userId;
+    sauceModel.findOne({_id: req.params.id})
+        .then((sauce) => {
+            if (sauce.userId != req.auth.userId) {
+                res.status(401).json({ message : 'Non autorisé !'});
+            } else {
+                sauceModel.updateOne({ _id: req.params.id}, { ...sauceWithImage, _id: req.params.id})
+                .then(() => res.status(200).json({message : 'Objet modifié!'}))
+                .catch(error => res.status(401).json({ error }));
+            }
+        })
+        .catch((error) => {
+            res.status(400).json({ error });
+        })
+ };
 
 //fonction pour supprimer une sauce avec son _id
 exports.deleteOneSauce = (req, res, next) => {
+    // sauceModel
+    // .deleteOne({_id : req.params.id})
+    // .then(() => res.status(200).json({message : "Cette sauce a bien été supprimée !"}))
+    // .catch((err) => res.status(400).json({err}))
     sauceModel
-    .deleteOne({_id : req.params.id})
-    .then(() => res.status(200).json({message : "Cette sauce a bien été supprimée !"}))
-    .catch((err) => res.status(400).json({err}))
+    .findOne({_id : req.params.id})
+    .then((sauce)=> {
+        if(sauce.userId != req.auth.userId){
+            res.status(401).json({message : "non autorisé !"})
+        }else{
+            const filename = sauce.imageUrl.split('/images')[1];
+            fs.unlink(`images/${filename}`, () => {
+                sauceModel
+                .deleteOne({_id : req.params.id})
+                .then(()=> { res.status(200).json({message : "Votre sauce a bien été supprimée !"})})
+                .catch((err) => res.status(401).json({err}))
+            })
+        }
+    })
+    .catch((err)=> {res.status(401).json({err})})
 };
 
 //fonction pour liker une sauce
