@@ -14,6 +14,8 @@ const userRoutes = require('./routes/userRoutes');
 const saucesRoutes = require('./routes/saucesRoutes');
 //importation path
 const path = require('path');
+//importation helmet
+const helmet = require('helmet');
 //------------------------------------------------------- Application ----------------------------------------------//
 //crée une application express 
 const app = express();
@@ -46,7 +48,8 @@ app.use("/api/auth", userRoutes);
 app.use("/api/sauces", saucesRoutes);
 //routage image
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
+//helmet
+app.use(helmet());
 
 //--------------------------------------------------------------- Exportation -------------------------------------------//
 //exportation de app.js pour l'utiliser dans les autres fichiers

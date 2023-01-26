@@ -69,7 +69,7 @@ exports.modifyOneSauce = (req, res, next) => {
     sauceModel.findOne({_id: req.params.id})
         .then((sauce) => {
             if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message : 'Non autorisé !'});
+                res.status(403).json({ message : 'Non autorisé !'});
             } else {
                 sauceModel.updateOne({ _id: req.params.id}, { ...sauceWithImage, _id: req.params.id})
                 .then(() => res.status(200).json({message : 'Objet modifié!'}))
@@ -105,7 +105,7 @@ exports.deleteOneSauce = (req, res, next) => {
     .catch((err)=> {res.status(401).json({err})})
 };
 
-//fonction pour liker une sauce
+//fonction pour liker ou disliker une sauce
 exports.likeSauce = (req, res, next) => {
     if(req.body.like == 1){                 //si il y'a un like dans le req.body
         sauceModel
