@@ -1,10 +1,13 @@
-//authentification par token
-
 //importations
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
-
+/**
+ * fonction authentification par token
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 const authentificationByToken = (req, res, next) => {
     try{
         //recuperation du token dans le header authorisation : bearer token
@@ -29,6 +32,7 @@ const authentificationByToken = (req, res, next) => {
     }
 };
 
-
+//--------------------------------------------------------------- Exportation -----------------------------------------------------------------//
+//exportation fonction d'authentification par token
 module.exports = authentificationByToken;
 

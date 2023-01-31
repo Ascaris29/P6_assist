@@ -1,6 +1,5 @@
 //importation mongoose 
 const mongoose = require('mongoose');
-
 //importation variable d'environnement
 const dotenv = require('dotenv').config();
 
@@ -15,5 +14,6 @@ mongoose.connect(process.env.DB_URL, /*ne pas oublier de retirer les balises fer
 .catch(() => console.log('Echec de la connexion avec la base de donnée !'));
 
 
+//--------------------------------------------------------------- Exportation -----------------------------------------------------------------//
 //exportation du fichier database.js
 module.exports = mongoose;

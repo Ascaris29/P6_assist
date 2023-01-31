@@ -15,6 +15,8 @@ const sauceModel = mongoose.Schema({
     usersDisliked : { type : Array, required : true} 
 });
 
+
+//--------------------------------------------------------------- Exportation -----------------------------------------------------------------//
 //exporation du modèle de données
 // le nom entre guillemets permets d'identifier les données dans mongoDB
 module.exports = mongoose.model("sauces", sauceModel);

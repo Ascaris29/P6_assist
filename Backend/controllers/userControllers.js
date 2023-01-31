@@ -1,23 +1,24 @@
 //importation modele de base de données user
 const User = require('../models/userModel');
-
 //importation de bcrypt pour hasher le password
 const bcrypt = require('bcrypt');
-
 //importation crypto-js pour chiffrer l'adresse email
 const cryptojs = require('crypto-js');
-
 //importation de variable d'environnement
 const dotenv = require('dotenv').config();
-
 //importation du package token
 const jwt = require('jsonwebtoken');
 
 
 
-//middleware signup
 // création d'une donnée user à partir du modele dans le fichier userModel
 // récupération des données user grace à req.body qui recupere le corps de la requete que l'utilisateur a tapé
+/**
+ * fonction signup
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.signup = (req, res, next) => {
     //chiffrer l'email avant de l'envoyer 
     const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
@@ -39,10 +40,14 @@ exports.signup = (req, res, next) => {
     })
     .catch((err) => res.status(500).json(err))
 };
-//middleware login 
 //verification des données utilisateurs
+/**
+ * fonction login
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.login = (req, res, next) => {
-
     //verification de l'adresse email 
     const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
     User

@@ -1,5 +1,3 @@
-// middleware pour gérer les requêtes HTTP avec envoi de fichiers
-
 // importations
 const multer = require("multer");
 
@@ -11,6 +9,10 @@ const MIME_TYPE = {
     "image/png" : "png"
 }
 
+
+/**
+ * middleware de gestion des images
+ */
 //gérer la destination (répertoire) du fichier et générer un nom de fichier unique
 //enregistre sur le disque
 const storage = multer.diskStorage({
@@ -27,8 +29,7 @@ const storage = multer.diskStorage({
     }
 })
 
-
-
+//--------------------------------------------------------------- Exportation -----------------------------------------------------------------//
 //exportation du multer
 //nous generons uniquement les téléchargerments de fichiers images
 module.exports = multer({storage}).single("image");

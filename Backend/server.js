@@ -1,9 +1,7 @@
 //importer le module http de node pour avoir les outils pour créer le serveur
 const http = require('http');
-
 //importer l'implication
 const app = require('./app');
-
 //importer les variables d'environnement
 const variablesEnv = require("dotenv");
 const result = variablesEnv.config();

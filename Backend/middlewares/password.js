@@ -14,7 +14,12 @@ schemaPassword
 .has().not().spaces()                           // Pas d'espaces
 .is().not().oneOf(['Passw0rd', 'Password123']); // valeurs interdites 
 
-
+/**
+ * Middleware contrôle des mots de passe
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 // verification de la qualité du password par rapport au schema 
 //fonction validate va venir verifier le format du mot de passe entré par l'utilisateur
 const verificationQualityPassword = (req, res, next) => {
@@ -25,6 +30,8 @@ const verificationQualityPassword = (req, res, next) => {
         next()
     }
 };
+
+//--------------------------------------------------------------- Exportation -----------------------------------------------------------------//
 
 //exporation de la fonction de verification de la qualté du password 
 module.exports = verificationQualityPassword;

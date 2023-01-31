@@ -19,11 +19,10 @@ const helmet = require('helmet');
 //------------------------------------------------------- Application ----------------------------------------------//
 //crée une application express 
 const app = express();
-//-------------------------------------------------- Middlewares ----------------------------------------------------//
+//-------------------------------------------------- Middlewares appelés à chaque fois qu'une requête est envoyée au serveur ----------------------------------------------------//
 
 //debeugeur base de données
 //mongoose.set('debug', true)
-
 
 
 // middleware poue les erreurs CORS .. s'applique sur toutes les routes
