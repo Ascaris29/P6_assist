@@ -108,29 +108,57 @@ exports.deleteOneSauce = (req, res, next) => {
 //fonction pour liker ou disliker une sauce
 exports.likeSauce = (req, res, next) => {
     if(req.body.like == 1){                 //si il y'a un like dans le req.body
-        sauceModel
-        .updateOne({_id : req.params.id},  {$inc : { likes : 1}, $push : {usersLiked : req.auth.userId}})       //ajoute un like dans la bdd et ajoute l'utilisateur qui a liké
-        .then(res.status(200).json({message : "vous avez aimé cette sauce !"}))
-        .catch((err)=> res.status(400).json({message : "erreur lors du like"}))
+        sauceModel.findOne({_id: req.params.id})
+        .then((sauce)=>{
+            if(sauce.usersLiked.includes(req.auth.userId)){
+                res.status(403).json({message : "un like par sauce !"})
+            }else{
+                sauce.likes += 1;       //on incrémente 1 like
+                sauce.usersLiked.push(req.auth.userId);     //on ajoute l'user Id à la clée userLiked
+                sauce
+                .save()
+                .then(()=>res.status(201).json({message : "like ajouté !"}))
+                .catch((err)=>res.status(400).json({message : "erreurs lors de la création du like !"}))
+            }
+        })
+        .catch((err)=>res.status(500).json({err}));  
     }else if(req.body.like == -1) {                         //si il y'a un -1 dans le req.body
-        sauceModel
-        .updateOne({_id : req.params.id},  {$inc : { dislikes : 1}, $push : {usersDisliked : req.auth.userId}})         //ajoute un dislike dans la bdd et ajoute un utilisateur qui a disliké
-        .then(res.status(200).json({message : "vous n'avez pas aimé cette sauce !"}))
-        .catch((err)=> res.status(400).json({message : "erreur lors du dislike"}))
-    }else{
+        sauceModel.findOne({_id : req.params.id})
+        .then((sauce)=>{
+            if(sauce.usersDisliked.includes(req.auth.userId)){
+                res.status(403).json({message: "un dislike par sauce"})
+            }else{
+                sauce.dislikes += 1;
+                sauce.usersDisliked.push(req.auth.userId);
+                sauce
+                .save()
+                .then(()=> res.status(201).json({message : "dislike ajouté"}))
+                .catch((err)=>res.status(400).json({message : "erreurs lors de la création du dislike !"}))
+            }
+        })
+        .catch((err)=>res.status(500).json({err}));
+    }else{          //correspond à un autre nombre que 1 , 0 ou -1
         sauceModel
         .findOne({_id : req.params.id})
         .then((sauce)=>{
                 if (sauce.usersLiked.includes(req.auth.userId)){
-                    sauceModel.updateOne({_id : req.params.id},  {$inc : { likes : - 1}, $pull : { usersLiked : req.auth.userId}})
-                    .then(()=> {res.status(200).json({message :"Vous avez bien retiré votre like !"})})
-                    .catch((error)=> res.status(500).json({message : "like non retiré"}))
-                    console.log("deja present")
+                    sauce.likes -= 1;
+                    sauce.usersLiked.pull(req.auth.userId);
+                    sauce
+                    .save()
+                    .then(()=>res.status(201).json({message : "like retiré !"}))
+                    .catch((err)=>res.status(400).json({message : "erreurs lors de la suppression du like !"}))
+                
+                    
                 }else if(sauce.usersDisliked.includes(req.auth.userId)){
-                    sauceModel.updateOne({_id : req.params.id},  {$inc : { dislikes : -1}, $pull : {usersDisliked : req.auth.userId}})
-                    .then(()=> {res.status(200).json({message : "vous avez retiré votre dislike !"})})
-                    .catch((error)=> {res.status(500).json({message : "dislike non retiré"})})
-                    console.log("pas present")
+                    sauce.dislikes -= 1;
+                    sauce.usersDisliked.pull(req.auth.userId);
+                    sauce
+                    .save()
+                    .then(()=>res.status(201).json({message : "dislike retiré !"}))
+                    .catch((err)=>res.status(400).json({message : "erreurs lors de la suppression du dislike !"}))
+                }else{
+                    res.status(401).json({message : "tentative de triche detectée !"})
                 }
             })
         .catch((err)=> res.status(400).json({message : "erreur lors du like"}))

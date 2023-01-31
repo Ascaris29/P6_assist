@@ -35,9 +35,8 @@ app.use((req, res, next) => {
     next();
   });
 
-
 //logger les requetes et les reponses 
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 //importation de body parser qui analyse le corps des requetes et des reponses
 app.use(express.json());
 
@@ -49,10 +48,11 @@ app.use("/api/sauces", saucesRoutes);
 //routage image
 app.use('/images', express.static(path.join(__dirname, 'images')));
 //helmet
-app.use(helmet());
+//app.use(helmet());
 
 //--------------------------------------------------------------- Exportation -------------------------------------------//
 //exportation de app.js pour l'utiliser dans les autres fichiers
 module.exports = app;
+
 
 
