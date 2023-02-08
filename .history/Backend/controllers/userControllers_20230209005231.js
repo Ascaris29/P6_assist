@@ -10,7 +10,6 @@ const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 
-
 // création d'une donnée user à partir du modele dans le fichier userModel
 // récupération des données user grace à req.body qui recupere le corps de la requete que l'utilisateur a tapé
 /**
@@ -21,7 +20,7 @@ const jwt = require('jsonwebtoken');
  */
 exports.signup = (req, res, next) => {
     //chiffrer l'email avant de l'envoyer 
-    //const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
+    const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
     // hasher le mot de passe avant de l'envoyer en bdd
     // 10 = nombres de tours de l'algorithme
     bcrypt
@@ -29,7 +28,7 @@ exports.signup = (req, res, next) => {
     .then((hash) => {
         // ce qui va être envoyé dans la bdd avec le mot de passe hashé
         const user = new User({
-            email : req.body.email,
+            email : emailCryptoJs,
             password : hash
         });
     //enregistrer la donnée user dans la base de donnée
@@ -49,10 +48,10 @@ exports.signup = (req, res, next) => {
  */
 exports.login = (req, res, next) => {
     //verification de l'adresse email 
-    //const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
+    const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
     User
     //cherche dans la base de données si l'utilisateur est bien présent grace à la fonction findOne
-    .findOne({email: req.body.email})
+    .findOne({email: emailCryptoJs})
     //si le mail de l'user n'est pas présent dans la bdd, il n'existe pas
     .then((user) => {
         if(!user){

@@ -52,7 +52,7 @@ exports.login = (req, res, next) => {
     //const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL).toString();
     User
     //cherche dans la base de données si l'utilisateur est bien présent grace à la fonction findOne
-    .findOne({email: req.body.email})
+    .findOne({email: emailCryptoJs})
     //si le mail de l'user n'est pas présent dans la bdd, il n'existe pas
     .then((user) => {
         if(!user){
